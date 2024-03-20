@@ -1,13 +1,23 @@
 import 'package:ecommerce_ui_task/home_screen.dart';
+import 'package:ecommerce_ui_task/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class ScreenArgs {
+  Product? product;
+}
 
 class AddProductPage extends StatelessWidget {
-  const AddProductPage({super.key});
+  AddProductPage({super.key, this.edit = false});
+
+  bool edit = false;
 
   @override
   Widget build(BuildContext context) {
+    String title = edit ? 'Edit product' : 'Add Product';
+    String action = edit ? 'Update' : 'Add';
+    Product? product = ModalRoute.of(context)!.settings.arguments as Product?;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -20,7 +30,7 @@ class AddProductPage extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        'Add Product',
+                        title,
                         style: textMedium,
                       ),
                       const SizedBox(
@@ -54,11 +64,12 @@ class AddProductPage extends StatelessWidget {
                         height: 15,
                       ),
                       _buildInputLabel('name'),
-                      _buildInputField(),
+                      _buildInputField(product?.productName ?? ''),
                       _buildInputLabel('category'),
-                      _buildInputField(),
+                      _buildInputField(product?.category ?? ''),
                       _buildInputLabel('price'),
                       _buildInputField(
+                        product?.price.toString() ?? "0.0",
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(
                               RegExp(r'[0-9]')), // Only allow digits
@@ -73,10 +84,11 @@ class AddProductPage extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               color: Colors.grey[200]),
-                          child: const TextField(
+                          child: TextFormField(
+                            initialValue: product?.description ?? "",
                             maxLines: 8,
                             keyboardType: TextInputType.multiline,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 16.0),
@@ -89,10 +101,11 @@ class AddProductPage extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      _buildButton('ADD', const Color(0xFF3F51F3), Colors.white,
-                          const Color(0xFF3F51F3)),
-                      _buildButton(
-                          'DELETE', Colors.white, Colors.red, Colors.red)
+                      _buildButton(action, const Color(0xFF3F51F3),
+                          Colors.white, const Color(0xFF3F51F3)),
+                      if (edit)
+                        _buildButton(
+                            'DELETE', Colors.white, Colors.red, Colors.red)
                     ],
                   ),
                 ],
@@ -134,7 +147,7 @@ Row _buildInputLabel(String label) {
   );
 }
 
-Container _buildInputField(
+Container _buildInputField(String initValue,
     {List<TextInputFormatter> inputFormatters = const [],
     TextInputType? keyboardType,
     Widget? suffixIcon}) {
@@ -142,7 +155,8 @@ Container _buildInputField(
     margin: const EdgeInsets.only(top: 5, bottom: 8),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0), color: Colors.grey[200]),
-    child: TextField(
+    child: TextFormField(
+      initialValue: initValue,
       decoration: InputDecoration(
         border: InputBorder.none,
         suffixIcon: suffixIcon,

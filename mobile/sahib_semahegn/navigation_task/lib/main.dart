@@ -10,8 +10,9 @@ void main() {
     initialRoute: '/',
     routes: {
       '/': (context) => HomeScreen(),
-      '/add_product': (context) => const AddProductPage(),
+      '/add_product': (context) => AddProductPage(),
       '/product_detail': (context) => const ProductDetail(),
+      '/edit_product': (context) => AddProductPage(edit: true)
     },
   ));
 }

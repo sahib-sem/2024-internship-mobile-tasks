@@ -130,7 +130,10 @@ class ProductDetail extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/edit_product',
+                                  arguments: product);
+                            },
                             child: Text(
                               'UPDATE',
                               style: GoogleFonts.poppins(
