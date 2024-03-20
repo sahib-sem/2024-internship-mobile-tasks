@@ -23,6 +23,7 @@ final TextStyle textSmallBold = GoogleFonts.poppins(
   fontWeight: FontWeight.bold,
   color: Colors.grey,
 );
+
 final Product product = Product(
     imageUrl: 'images/product.jpg',
     category: "Men's shoe",
@@ -33,9 +34,37 @@ final Product product = Product(
     price: 120,
     avalaibleSizes: [39, 40, 41, 42, 43, 44]);
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final String today = DateFormat('MMMM d, y').format(DateTime.now());
+  List<Product> products = [product, product];
+
+  void addProduct(Product product) {
+    setState(() {
+      products.add(product);
+    });
+  }
+
+  void updateProduct(Product product, Product new_product) {
+
+    for (var p in products){
+
+      if(p.productId == product.productId) {
+
+        product.update(new_product);
+      }
+    }
+
+    
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +146,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    _buildProductCard(product, context),
-                    _buildProductCard(product, context),
-                    _buildProductCard(product, context),
+                    for (var product in products)
+                      _buildProductCard(product, context, updateProduct),
                     const SizedBox(
                       height: 60,
                     )
@@ -142,11 +170,11 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-GestureDetector _buildProductCard(Product product, BuildContext context) {
+GestureDetector _buildProductCard(Product product, BuildContext context, dynamic updateProduct) {
   return GestureDetector(
     onTap: () => {
       Navigator.pushNamed(context, '/product_detail',
-          arguments: {'product': product})
+          arguments: {'product': product, 'add_product':updateProduct})
     },
     child: Card(
       elevation: 2.0,

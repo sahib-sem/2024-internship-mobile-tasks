@@ -11,9 +11,11 @@ class AddProductPage extends StatelessWidget {
   AddProductPage({super.key, this.edit = false});
 
   bool edit = false;
+ 
 
   @override
   Widget build(BuildContext context) {
+
     String title = edit ? 'Edit product' : 'Add Product';
     String action = edit ? 'Update' : 'Add';
     Product? product = ModalRoute.of(context)!.settings.arguments as Product?;
