@@ -9,7 +9,7 @@ void main() {
     title: 'ecommerce app',
     initialRoute: '/',
     routes: {
-      '/': (context) => HomeScreen(),
+      '/': (context) => const HomeScreen(),
       '/add_product': (context) => AddProductPage(),
       '/product_detail': (context) => const ProductDetail(),
       '/edit_product': (context) => AddProductPage(edit: true)
