@@ -4,8 +4,8 @@ import 'package:clean_arch/features/product/domain/entities/product.dart';
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class GetProduct extends Usecase<Product, Params> {
-  GetProduct({required this.repository});
+class ViewProductUsecase extends Usecase<Product, Params> {
+  ViewProductUsecase({required this.repository});
 
   ProductRepository repository;
 

@@ -11,15 +11,14 @@ import '../../../../common/test_product.dart';
 import 'add_product_test.mocks.dart';
 
 void main() {
-
   test('should return list of products', () async {
     MockProductRepository mockProductRepository = MockProductRepository();
-    GetProductList usecase = GetProductList(repository: mockProductRepository);
+    ViewAllProductsUsecase usecase =
+        ViewAllProductsUsecase(repository: mockProductRepository);
 
     when(mockProductRepository.getProducts())
-      .thenAnswer((_) async => Right([testProduct]));
+        .thenAnswer((_) async => Right([testProduct]));
 
-    
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

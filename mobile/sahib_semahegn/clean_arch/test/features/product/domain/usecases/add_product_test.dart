@@ -12,15 +12,16 @@ import 'add_product_test.mocks.dart';
 void main() {
   test('should return void when product is being added', () async {
     MockProductRepository mockProductRepository = MockProductRepository();
-    AddProduct usecase = AddProduct(repository: mockProductRepository);
+    CreateProductUsecase usecase =
+        CreateProductUsecase(repository: mockProductRepository);
 
-    when(mockProductRepository.addProduct(testProduct))
+    when(mockProductRepository.CreateProductUsecase(testProduct))
         .thenAnswer((_) async => const Right(null));
 
-    final result =  await usecase(Params(product: testProduct));
+    final result = await usecase(Params(product: testProduct));
 
     expect(result, const Right(null));
-    verify(mockProductRepository.addProduct(testProduct));
+    verify(mockProductRepository.CreateProductUsecase(testProduct));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }
