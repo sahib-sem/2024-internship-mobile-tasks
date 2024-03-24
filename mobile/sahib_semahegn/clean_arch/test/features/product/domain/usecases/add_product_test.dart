@@ -16,13 +16,13 @@ void main() {
     CreateProductUsecase usecase =
         CreateProductUsecase(repository: mockProductRepository);
 
-    when(mockProductRepository.CreateProductUsecase(testProduct))
+    when(mockProductRepository.createProdut(testProductModel))
         .thenAnswer((_) async => const Right(null));
 
     final result = await usecase(Params(product: testProductModel));
 
     expect(result, const Right(null));
-    verify(mockProductRepository.CreateProductUsecase(testProduct));
+    verify(mockProductRepository.createProdut(testProductModel));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }
