@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract class ProductRepository {
   Future<Either<Failure, Product>> getProduct(String productId);
   Future<Either<Failure, List<Product>>> getProducts();
-  Future<Either<Failure, void>> addProduct(Product product);
-  Future<Either<Failure, void>> updateProduct(Product product);
-  Future<Either<Failure, void>> deleteProduct(String productId);
+  Future<Either<Failure, void>> CreateProductUsecase(Product product);
+  Future<Either<Failure, void>> UpdateProductUsecase(Product product);
+  Future<Either<Failure, void>> DeleteProductUsecase(String productId);
 }

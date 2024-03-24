@@ -4,14 +4,14 @@ import 'package:clean_arch/features/product/domain/entities/product.dart';
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class UpdateProduct extends Usecase<void, Params> {
-  UpdateProduct({required this.repository});
+class UpdateProductUsecase extends Usecase<void, Params> {
+  UpdateProductUsecase({required this.repository});
 
   ProductRepository repository;
 
   @override
   Future<Either<Failure, void>> call(Params params) async {
-    return await repository.updateProduct(params.product);
+    return await repository.UpdateProductUsecase(params.product);
   }
 }
 
