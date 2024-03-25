@@ -8,8 +8,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
-import '../../../../common/test_product.dart';
 import '../../../../common/test_product_model.dart';
 import 'product_repository_implementation_test.mocks.dart';
 
