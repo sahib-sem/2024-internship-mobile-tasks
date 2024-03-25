@@ -89,6 +89,7 @@ class ProductRepositoryImpl implements ProductRepository {
 
       if (await networkInfo.isConnected) {
         final remoteProducts = await productRemoteSource.getProducts();
+        productLocalSource.cacheProducts(remoteProducts);
         return Right(remoteProducts);
       } else {
         
