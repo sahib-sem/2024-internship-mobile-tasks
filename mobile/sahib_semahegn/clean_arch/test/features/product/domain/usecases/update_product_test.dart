@@ -12,13 +12,13 @@ void main() {
         DeleteProductUsecase(repository: mockProductRepository);
     String productId = '123asdfjlkj';
 
-    when(mockProductRepository.DeleteProductUsecase(productId))
+    when(mockProductRepository.deleteProduct(productId))
         .thenAnswer((_) async => const Right(null));
 
     final result = await usecase(Params(productId: productId));
 
     expect(result, const Right(null));
-    verify(mockProductRepository.DeleteProductUsecase(productId));
+    verify(mockProductRepository.deleteProduct(productId));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

@@ -1,7 +1,6 @@
 import 'package:clean_arch/core/error/failure.dart';
 import 'package:clean_arch/core/usecases/usecase.dart';
 import 'package:clean_arch/features/product/data/models/product_model.dart';
-import 'package:clean_arch/features/product/domain/entities/product.dart';
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -12,7 +11,7 @@ class CreateProductUsecase extends Usecase<void, Params> {
 
   @override
   Future<Either<Failure, void>> call(Params params) async {
-    return await repository.CreateProductUsecase(params.product);
+    return await repository.createProdut(params.product);
   }
 }
 

@@ -10,7 +10,7 @@ class DeleteProductUsecase extends Usecase<void, Params> {
 
   @override
   Future<Either<Failure, void>> call(Params params) async {
-    return await repository.DeleteProductUsecase(params.productId);
+    return await repository.deleteProduct(params.productId);
   }
 }
 

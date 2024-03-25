@@ -6,6 +6,8 @@
 import 'dart:async' as _i4;
 
 import 'package:clean_arch/core/error/failure.dart' as _i5;
+import 'package:clean_arch/features/product/data/models/product_model.dart'
+    as _i7;
 import 'package:clean_arch/features/product/domain/entities/product.dart'
     as _i6;
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart'
@@ -81,54 +83,53 @@ class MockProductRepository extends _i1.Mock implements _i3.ProductRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Product>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> CreateProductUsecase(
-          _i6.Product? product) =>
+  _i4.Future<_i2.Either<_i5.Failure, void>> createProdut(
+          _i7.ProductModel? product) =>
       (super.noSuchMethod(
         Invocation.method(
-          #CreateProductUsecase,
+          #createProdut,
           [product],
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
             _FakeEither_0<_i5.Failure, void>(
           this,
           Invocation.method(
-            #CreateProductUsecase,
+            #createProdut,
             [product],
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> UpdateProductUsecase(
-          _i6.Product? product) =>
+  _i4.Future<_i2.Either<_i5.Failure, void>> updateProduct(
+          _i7.ProductModel? product) =>
       (super.noSuchMethod(
         Invocation.method(
-          #UpdateProductUsecase,
+          #updateProduct,
           [product],
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
             _FakeEither_0<_i5.Failure, void>(
           this,
           Invocation.method(
-            #UpdateProductUsecase,
+            #updateProduct,
             [product],
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> DeleteProductUsecase(
-          String? productId) =>
+  _i4.Future<_i2.Either<_i5.Failure, void>> deleteProduct(String? productId) =>
       (super.noSuchMethod(
         Invocation.method(
-          #DeleteProductUsecase,
+          #deleteProduct,
           [productId],
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
             _FakeEither_0<_i5.Failure, void>(
           this,
           Invocation.method(
-            #DeleteProductUsecase,
+            #deleteProduct,
             [productId],
           ),
         )),

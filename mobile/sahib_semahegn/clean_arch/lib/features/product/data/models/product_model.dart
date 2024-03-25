@@ -1,7 +1,7 @@
 import 'package:clean_arch/features/product/domain/entities/product.dart';
 
 class ProductModel extends Product {
-  ProductModel(
+ const ProductModel(
       {required super.name,
       required super.description,
       required super.price,
@@ -9,7 +9,7 @@ class ProductModel extends Product {
       required super.category,
       required this.productId});
 
-  String productId;
+  final String productId;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
