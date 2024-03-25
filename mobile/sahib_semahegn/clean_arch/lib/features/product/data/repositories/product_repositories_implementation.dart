@@ -1,6 +1,3 @@
-
-import 'dart:math';
-
 import 'package:clean_arch/core/error/exception.dart';
 import 'package:clean_arch/core/error/failure.dart';
 import 'package:clean_arch/core/network/network_info.dart';
