@@ -38,7 +38,6 @@ void main() {
     final result = productModel.toJson();
     // assert
     final expectedMap = {
-      '_id': '65f015b8067e341298b2aa56',
       'title': 'Product 2',
       'price': 300,
       'description': 'This is the description for product 2',

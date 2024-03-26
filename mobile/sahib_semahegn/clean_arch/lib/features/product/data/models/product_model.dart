@@ -24,7 +24,6 @@ class ProductModel extends Product {
 
   Map<String, dynamic> toJson() {
     return {
-      '_id': productId,
       'title': name,
       'description': description,
       'price': price,
