@@ -19,7 +19,7 @@ void main() {
     when(mockProductRepository.createProdut(testProductModel))
         .thenAnswer((_) async => const Right(null));
 
-    final result = await usecase(Params(product: testProductModel));
+    final result = await usecase(AddProductParams(product: testProductModel));
 
     expect(result, const Right(null));
     verify(mockProductRepository.createProdut(testProductModel));

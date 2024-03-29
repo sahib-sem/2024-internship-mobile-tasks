@@ -15,7 +15,7 @@ void main() {
     when(mockProductRepository.getProduct(productId))
         .thenAnswer((_) async => Right(testProduct));
 
-    final result = await usecase(Params(productId: productId));
+    final result = await usecase(GetProductParams(productId: productId));
 
     expect(result, Right(testProduct));
     verify(mockProductRepository.getProduct(productId));

@@ -1,24 +1,25 @@
 import 'package:clean_arch/features/product/domain/usecases/delete_product.dart';
+import 'package:clean_arch/features/product/domain/usecases/update_product.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../../common/test_product_model.dart';
 import 'add_product_test.mocks.dart';
 
 void main() {
-  test('should return void when a product is deleted', () async {
+  test('should return void when a product is updated', () async {
     MockProductRepository mockProductRepository = MockProductRepository();
-    DeleteProductUsecase usecase =
-        DeleteProductUsecase(repository: mockProductRepository);
-    String productId = '123asdfjlkj';
+    UpdateProductUsecase usecase =
+        UpdateProductUsecase(repository: mockProductRepository);
+    
 
-    when(mockProductRepository.deleteProduct(productId))
-        .thenAnswer((_) async => const Right(null));
+    when(mockProductRepository.updateProduct(testProductModel)).thenAnswer((_) async => Right(null));
 
-    final result = await usecase(Params(productId: productId));
+    final result = await usecase(UpdateProductParams(product: testProductModel));
 
     expect(result, const Right(null));
-    verify(mockProductRepository.deleteProduct(productId));
+    verify(mockProductRepository.updateProduct(testProductModel));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }
