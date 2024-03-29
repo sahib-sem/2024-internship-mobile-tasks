@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../common/test_product.dart';
 import '../../../../common/test_product_model.dart';
 import 'add_product_test.mocks.dart';
 
@@ -19,7 +18,7 @@ void main() {
     when(mockProductRepository.createProdut(testProductModel))
         .thenAnswer((_) async => const Right(null));
 
-    final result = await usecase(Params(product: testProductModel));
+    final result = await usecase(AddProductParams(product: testProductModel));
 
     expect(result, const Right(null));
     verify(mockProductRepository.createProdut(testProductModel));

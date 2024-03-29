@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'inject_depedancies.dart' as di;
 
-void main() {
+void main() async {
+  await di.init();
 }

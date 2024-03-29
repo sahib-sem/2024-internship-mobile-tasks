@@ -15,7 +15,7 @@ void main() {
     when(mockProductRepository.deleteProduct(productId))
         .thenAnswer((_) async => const Right(null));
 
-    final result = await usecase(Params(productId: productId));
+    final result = await usecase(DeleteProductParams(productId: productId));
 
     expect(result, const Right(null));
     verify(mockProductRepository.deleteProduct(productId));
