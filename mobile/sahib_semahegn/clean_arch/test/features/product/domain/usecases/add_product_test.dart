@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../common/test_product.dart';
 import '../../../../common/test_product_model.dart';
 import 'add_product_test.mocks.dart';
 
