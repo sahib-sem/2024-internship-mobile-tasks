@@ -33,7 +33,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final result = await viewAllProductsUsecase(NoParams());
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
-        (products) => emit(ProductLoaded(products)),
+        (products) => emit(AllProductLoaded(products)),
       );
     });
 
@@ -42,7 +42,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final result = await viewProductUsecase(GetProductParams(productId: event.id));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
-        (product) => emit(ProductLoaded([product])),
+        (product) => emit(ProductLoaded(product)),
       );
     });
 
@@ -51,7 +51,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final result = await createProductUsecase(AddProductParams(product: event.product));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
-        (product) => emit(const ProductLoaded([])),
+        (product) => emit(const AllProductLoaded([])),
       );
     });
 
@@ -60,7 +60,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final result = await updateProductUsecase(UpdateProductParams(product: event.product));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
-        (product) => emit(const ProductLoaded([])),
+        (product) => emit(const AllProductLoaded([])),
       );
     });
 
@@ -69,7 +69,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final result = await deleteProductUsecase(DeleteProductParams(productId: event.id));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
-        (product) => emit(const ProductLoaded([])),
+        (product) => emit(const AllProductLoaded([])),
       );
     });
 
