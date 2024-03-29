@@ -1,13 +1,14 @@
 import 'package:clean_arch/features/product/domain/entities/product.dart';
 
 class ProductModel extends Product {
- const ProductModel(
+  const ProductModel(
       {required super.name,
       required super.description,
       required super.price,
       required super.imgUrl,
       required super.category,
-      required this.productId});
+      required this.productId,
+      required super.rating});
 
   final String productId;
 
@@ -19,6 +20,7 @@ class ProductModel extends Product {
       price: (json['price'] as num).toDouble(),
       imgUrl: json['image'],
       category: json['category'],
+      rating: json['rating']['rate'].toDouble(),
     );
   }
 
@@ -29,6 +31,7 @@ class ProductModel extends Product {
       'price': price,
       'image': imgUrl,
       'category': category,
+      'rating': rating,
     };
   }
 }

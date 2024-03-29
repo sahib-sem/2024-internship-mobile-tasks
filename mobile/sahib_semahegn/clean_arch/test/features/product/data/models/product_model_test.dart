@@ -10,7 +10,8 @@ import '../../../../fixture/fixture.dart';
 
 void main() {
 
-  ProductModel productModel = ProductModel(
+  ProductModel productModel = const ProductModel(
+    rating: 0.0,
     productId: '65f015b8067e341298b2aa56',
     name: 'Product 2',
     description: 'This is the description for product 2',
@@ -38,6 +39,7 @@ void main() {
     final result = productModel.toJson();
     // assert
     final expectedMap = {
+      'rating':0.0,
       'title': 'Product 2',
       'price': 300,
       'description': 'This is the description for product 2',

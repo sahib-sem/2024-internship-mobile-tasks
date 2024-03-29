@@ -1,6 +1,7 @@
 import 'package:clean_arch/features/product/domain/entities/product.dart';
 
-Product testProduct = Product(
+Product testProduct = const Product(
+    rating: 0.0,
     name: 'test',
     description: 'test description',
     price: 0.0,
