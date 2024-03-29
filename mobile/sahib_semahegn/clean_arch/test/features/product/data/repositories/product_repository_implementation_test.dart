@@ -17,6 +17,8 @@ void main() {
   MockProductRemoteSource mockProductRemoteSource = MockProductRemoteSource();
   MockProductLocalSource mockProductLocalSource = MockProductLocalSource();
 
+  final productModelList = [testProductModel];
+
   final productRepository = ProductRepositoryImpl(
       networkInfo: mockNetworkInfo,
       productLocalSource: mockProductLocalSource,
@@ -182,11 +184,11 @@ void main() {
         // arrange
 
         when(mockProductRemoteSource.getProducts())
-            .thenAnswer((_) async => [testProductModel]);
+            .thenAnswer((_) async => productModelList);
         // act
         final result = await productRepository.getProducts();
         // assert
-        expect(result, Right([testProductModel]));
+        expect(result, Right(productModelList));
         verify(mockProductRemoteSource.getProducts());
         verifyNoMoreInteractions(mockProductRemoteSource);
       });
@@ -214,11 +216,11 @@ void main() {
           'should return cached data when the call to the local source is sucessful',
           () async {
         when(mockProductLocalSource.getLatestCachedProducts())
-            .thenAnswer((_) async => [testProductModel]);
+            .thenAnswer((_) async => productModelList);
         // act
         final result = await productRepository.getProducts();
         // assert
-        expect(result, Right([testProductModel]));
+        expect(result, Right(productModelList));
         verify(mockProductLocalSource.getLatestCachedProducts());
         verifyNoMoreInteractions(mockProductLocalSource);
       });
@@ -285,5 +287,4 @@ void main() {
       });
     });
   });
-
 }
