@@ -7,10 +7,10 @@ class ProductModel extends Product {
       required super.price,
       required super.imgUrl,
       required super.category,
-      required this.productId,
+      required super.productId,
       required super.rating});
 
-  final String productId;
+  
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(

@@ -1,4 +1,5 @@
 import 'package:clean_arch/features/product/domain/entities/product.dart';
+import 'package:clean_arch/features/product/presentation/pages/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,7 +8,8 @@ import '../pages.dart';
 GestureDetector buildProductCard(Product product, BuildContext context) {
   return GestureDetector(
     onTap: () => {
-      Navigator.pushNamed(context, '/product_detail')
+      Navigator.of(context)
+          .pushNamed(ProductDetail.routeName, arguments: product)
     },
     child: Card(
       elevation: 2.0,
@@ -19,8 +21,10 @@ GestureDetector buildProductCard(Product product, BuildContext context) {
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
         child: Column(
           children: [
-            Image.asset(
+            Image.network(
               product.imgUrl,
+              errorBuilder: (context, error, stackTrace) =>
+                  Image.asset('images/placeholder-image.jpg'),
             ),
             const SizedBox(
               height: 14.0,
