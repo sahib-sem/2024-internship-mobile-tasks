@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:clean_arch/core/error/exception.dart';
 import 'package:clean_arch/features/product/data/models/product_model.dart';
@@ -9,7 +10,7 @@ abstract class ProductRemoteSource {
 
   Future<ProductModel> getProduct(String productId);
 
-  Future<void> createProduct(ProductModel product);
+  Future<void> createProduct(ProductModel product, {File? image});
 
   Future<void> updateProduct(ProductModel product);
 
@@ -24,14 +25,28 @@ class ProductRemoteSourceImpl implements ProductRemoteSource {
   final http.Client client;
 
   @override
-  Future<void> createProduct(ProductModel product) async {
-    final result = await client.post(
-      Uri.parse(baseUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(product.toJson()),
-    );
+  Future<void> createProduct(ProductModel product, {File? image}) async {
+    final request = http.MultipartRequest('POST', Uri.parse(baseUrl));
+    request.headers['Content-Type'] = 'multipart/form-data';
 
-    if (result.statusCode != 201) throw ServerException();
+    // Add product data to request body
+    request.fields['data'] = jsonEncode(product.toJson());
+
+    // Add image file to request if provided
+    if (image != null) {
+      request.files.add(http.MultipartFile(
+        'image',
+        image.readAsBytes().asStream(),
+        image.lengthSync(),
+        filename: image.path.split('/').last,
+      ));
+    }
+
+    // Send the request
+    final response = await request.send();
+
+    // Check response status code
+    if (response.statusCode != 201) throw ServerException();
   }
 
   @override
@@ -77,7 +92,6 @@ class ProductRemoteSourceImpl implements ProductRemoteSource {
 
   @override
   Future<void> updateProduct(ProductModel product) async {
-    
     final result = await client.patch(
       Uri.parse('$baseUrl/${product.productId}'),
       headers: {'Content-Type': 'application/json'},
