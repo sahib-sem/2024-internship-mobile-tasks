@@ -1,19 +1,26 @@
-# clean_arch
+# Flutter Clean Architecture Project
 
-A new Flutter project.
+This Flutter project was developed following the principles of clean architecture and test-driven design. It serves as a starter project for my internship, demonstrating CRUD operations on products.
 
-## Getting Started
+## Project Overview
 
-[![Project demo](https://img.youtube.com/vi/MprzY01UZH8/1.jpg)](https://www.youtube.com/watch?v=MprzY01UZH8)
+The project includes the following features:
 
+- Display a list of products
+- Create a new product
+- Update an existing product
+- Delete a product
 
-This project is a starting point for a Flutter application.
+## Project Structure
 
-A few resources to get you started if this is your first Flutter project:
+The project follows the clean architecture principles, with the following layers:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Presentation Layer:** Contains the UI components and business logic for displaying and interacting with products.
+- **Domain Layer:** Defines the business logic and entities for products.
+- **Data Layer:** Implements the data sources and repositories for fetching and storing product data.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Demo
+
+Check out the project demo on YouTube:
+
+[![Project Demo](https://img.youtube.com/vi/MprzY01UZH8/1.jpg)](https://www.youtube.com/watch?v=MprzY01UZH8)
