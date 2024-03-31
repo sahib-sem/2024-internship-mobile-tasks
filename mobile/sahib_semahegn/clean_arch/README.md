@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-![Video](videos/clean_arch_product_app.webm)
+![Video](video/clean_arch_product_app.webm)
 
 This project is a starting point for a Flutter application.
 
