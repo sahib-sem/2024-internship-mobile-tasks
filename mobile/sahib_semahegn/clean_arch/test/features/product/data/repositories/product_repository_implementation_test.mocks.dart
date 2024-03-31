@@ -4,10 +4,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:io' as _i6;
 
 import 'package:clean_arch/core/network/network_info.dart' as _i3;
 import 'package:clean_arch/features/product/data/datasources/product_local_datasource.dart'
-    as _i6;
+    as _i7;
 import 'package:clean_arch/features/product/data/datasources/product_remote_source.dart'
     as _i5;
 import 'package:clean_arch/features/product/data/models/product_model.dart'
@@ -88,11 +89,15 @@ class MockProductRemoteSource extends _i1.Mock
       ) as _i4.Future<_i2.ProductModel>);
 
   @override
-  _i4.Future<void> createProduct(_i2.ProductModel? product) =>
+  _i4.Future<void> createProduct(
+    _i2.ProductModel? product, {
+    _i6.File? image,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #createProduct,
           [product],
+          {#image: image},
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
@@ -124,7 +129,7 @@ class MockProductRemoteSource extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductLocalSource extends _i1.Mock
-    implements _i6.ProductLocalSource {
+    implements _i7.ProductLocalSource {
   MockProductLocalSource() {
     _i1.throwOnMissingStub(this);
   }

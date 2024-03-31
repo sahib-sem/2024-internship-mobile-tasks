@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_arch/core/error/exception.dart';
 import 'package:clean_arch/core/error/failure.dart';
 import 'package:clean_arch/core/network/network_info.dart';
@@ -21,12 +23,12 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductLocalSource productLocalSource;
 
   @override
-  Future<Either<Failure, void>> createProdut(ProductModel product) async {
+  Future<Either<Failure, void>> createProdut(ProductModel product, {File? image}) async {
     
    try {
 
       if (await networkInfo.isConnected) {
-        await productRemoteSource.createProduct(product);
+        await productRemoteSource.createProduct(product, image: image);
       return const Right(null);
 
       }

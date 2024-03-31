@@ -1,6 +1,10 @@
 {
   "products": [
     {
+      "rating": {
+        "rate": 0,
+        "count": 0
+      },
       "_id": "65f015b8067e341298b2aa56",
       "title": "Product 2",
       "price": 300,

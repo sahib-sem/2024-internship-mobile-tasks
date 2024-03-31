@@ -1,4 +1,3 @@
-
 import 'package:clean_arch/core/usecases/usecase.dart';
 import 'package:clean_arch/features/product/domain/usecases/add_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/delete_product.dart';
@@ -13,10 +12,9 @@ const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  
   final CreateProductUsecase createProductUsecase;
   final ViewAllProductsUsecase viewAllProductsUsecase;
-  final ViewProductUsecase  viewProductUsecase;
+  final ViewProductUsecase viewProductUsecase;
   final DeleteProductUsecase deleteProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
 
@@ -26,8 +24,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     required this.viewProductUsecase,
     required this.deleteProductUsecase,
     required this.updateProductUsecase,
-  }) : super(ProductInitial()){
-
+  }) : super(ProductInitial()) {
     on<GetProducts>((event, emit) async {
       emit(ProductLoading());
       final result = await viewAllProductsUsecase(NoParams());
@@ -39,7 +36,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<GetProduct>((event, emit) async {
       emit(ProductLoading());
-      final result = await viewProductUsecase(GetProductParams(productId: event.id));
+      final result =
+          await viewProductUsecase(GetProductParams(productId: event.id));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(ProductLoaded(product)),
@@ -48,36 +46,52 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<CreateProduct>((event, emit) async {
       emit(ProductLoading());
-      final result = await createProductUsecase(AddProductParams(product: event.product));
+      final result = await createProductUsecase(AddProductParams(
+        product: event.product,
+        image: event.image,
+      ));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
+      );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
       );
     });
 
     on<UpdateProduct>((event, emit) async {
       emit(ProductLoading());
-      final result = await updateProductUsecase(UpdateProductParams(product: event.product));
+      final result = await updateProductUsecase(
+          UpdateProductParams(product: event.product));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
+      );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
       );
     });
 
     on<DeleteProduct>((event, emit) async {
       emit(ProductLoading());
-      final result = await deleteProductUsecase(DeleteProductParams(productId: event.id));
+      final result =
+          await deleteProductUsecase(DeleteProductParams(productId: event.id));
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
       );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
+      );
     });
-
-
   }
-
-
-  
 }
-
-

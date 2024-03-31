@@ -1,23 +1,14 @@
-
 import 'dart:convert';
 
 import 'package:clean_arch/features/product/data/models/product_model.dart';
 import 'package:clean_arch/features/product/domain/entities/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../../common/test_product_model.dart';
 import '../../../../fixture/fixture.dart';
 
-
 void main() {
-
-  ProductModel productModel = ProductModel(
-    productId: '65f015b8067e341298b2aa56',
-    name: 'Product 2',
-    description: 'This is the description for product 2',
-    price: 300,
-    imgUrl: 'https://via.placeholder.com/500x500.png?text=Product+Image',
-    category: 'Products',
-  );
+  ProductModel productModel = testProductModel;
 
   test('should be a subclass of Product entity', () async {
     // assert
@@ -38,6 +29,7 @@ void main() {
     final result = productModel.toJson();
     // assert
     final expectedMap = {
+      'rating': 0.0,
       'title': 'Product 2',
       'price': 300,
       'description': 'This is the description for product 2',
@@ -46,5 +38,4 @@ void main() {
     };
     expect(result, expectedMap);
   });
-
 }

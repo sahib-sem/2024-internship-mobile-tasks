@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:clean_arch/features/product/data/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -34,8 +36,9 @@ class DeleteProduct extends ProductEvent {
 
 class CreateProduct extends ProductEvent {
   final ProductModel product;
+  File? image;
 
-  const CreateProduct(this.product);
+  CreateProduct(this.product, {this.image});
 
   @override
   List<Object> get props => [product];

@@ -31,7 +31,7 @@ void main() {
           await productRemoteSource.getProduct(productModel.productId);
 
       verify(mockClient.get(
-        Uri.parse('$baseUrl/$productModel.productId}'),
+        Uri.parse('$baseUrl/${productModel.productId}'),
         headers: {'Content-Type': 'application/json'},
       ));
     });
