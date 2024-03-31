@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-[![Project demo](https://img.youtube.com/vi/MprzY01UZH8/0.jpg)](https://www.youtube.com/watch?v=MprzY01UZH8)
+[![Project demo](https://img.youtube.com/vi/MprzY01UZH8/1.jpg)](https://www.youtube.com/watch?v=MprzY01UZH8)
 
 
 This project is a starting point for a Flutter application.
