@@ -108,7 +108,6 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
               BlocProvider.of<ProductBloc>(context)
                   .add(CreateProduct(product, image: _imageFile));
             }
-            BlocProvider.of<ProductBloc>(context).add(GetProducts());
             Navigator.of(context).pushNamedAndRemoveUntil(
                 HomeScreen.routeName, (route) => false);
           }

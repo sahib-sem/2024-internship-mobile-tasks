@@ -117,8 +117,7 @@ class ProductDetail extends StatelessWidget {
                               BlocProvider.of<ProductBloc>(context)
                                   .add(DeleteProduct(product.productId));
 
-                              BlocProvider.of<ProductBloc>(context)
-                                  .add(GetProducts());
+                
 
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   HomeScreen.routeName, (route) => false);

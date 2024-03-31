@@ -54,6 +54,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
       );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
+      );
     });
 
     on<UpdateProduct>((event, emit) async {
@@ -64,6 +70,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
       );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
+      );
     });
 
     on<DeleteProduct>((event, emit) async {
@@ -73,6 +85,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       result.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (product) => emit(const AllProductLoaded([])),
+      );
+
+      final updatedProducts = await viewAllProductsUsecase(NoParams());
+      updatedProducts.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
       );
     });
   }
