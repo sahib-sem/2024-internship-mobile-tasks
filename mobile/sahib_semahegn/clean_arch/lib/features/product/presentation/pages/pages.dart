@@ -1,4 +1,4 @@
 export 'home_screen.dart';
-export 'utils/font_styles.dart';
-export 'utils/build_product.dart';
-export 'utils/size_selector.dart';
+export '../widgets/utils/font_styles.dart';
+export '../widgets/utils/build_product.dart';
+export '../widgets/utils/size_selector.dart';

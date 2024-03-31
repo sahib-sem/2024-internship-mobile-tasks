@@ -38,7 +38,7 @@ class CreateProduct extends ProductEvent {
   final ProductModel product;
   File? image;
 
-  CreateProduct(this.product);
+  CreateProduct(this.product, {this.image});
 
   @override
   List<Object> get props => [product];

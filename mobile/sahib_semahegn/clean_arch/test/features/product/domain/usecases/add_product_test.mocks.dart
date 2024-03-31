@@ -4,6 +4,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:io' as _i8;
 
 import 'package:clean_arch/core/error/failure.dart' as _i5;
 import 'package:clean_arch/features/product/data/models/product_model.dart'
@@ -84,11 +85,14 @@ class MockProductRepository extends _i1.Mock implements _i3.ProductRepository {
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, void>> createProdut(
-          _i7.ProductModel? product) =>
+    _i7.ProductModel? product, {
+    _i8.File? image,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #createProdut,
           [product],
+          {#image: image},
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
             _FakeEither_0<_i5.Failure, void>(
@@ -96,6 +100,7 @@ class MockProductRepository extends _i1.Mock implements _i3.ProductRepository {
           Invocation.method(
             #createProdut,
             [product],
+            {#image: image},
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
