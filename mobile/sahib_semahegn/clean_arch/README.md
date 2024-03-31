@@ -4,7 +4,8 @@ A new Flutter project.
 
 ## Getting Started
 
-![Video](video/clean_arch_product_app.webm)
+[![Project demo](https://img.youtube.com/vi/MprzY01UZH8/0.jpg)](https://www.youtube.com/watch?v=MprzY01UZH8)
+
 
 This project is a starting point for a Flutter application.
 
