@@ -71,7 +71,7 @@ GestureDetector buildProductCard(Product product, BuildContext context) {
                       const SizedBox(
                         width: 3,
                       ),
-                      Text('(${product.rating.toString()})')
+                      Text("(${product.rating['rate'].toString()})")
                     ],
                   )
                 ],

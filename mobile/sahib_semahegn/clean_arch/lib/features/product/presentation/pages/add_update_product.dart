@@ -25,7 +25,7 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
 
   final Map<String, dynamic> _product = {};
 
-  File? _imageFile;
+  File? _imageFile = File('images/placeholder-image.jpg');
 
   void _selectImage() async {
     final imagePicker = ImagePicker();
@@ -69,6 +69,7 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
 
   Container _buildButton(String label, Color backgroundColor, Color textColor,
       Color borderColor, BuildContext context, ProductArguments args) {
+    debugPrint(_product.toString());
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       width: double.infinity,
@@ -79,11 +80,9 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
                 .add(DeleteProduct(args.product!.productId));
             Navigator.of(context).pushNamedAndRemoveUntil(
                 HomeScreen.routeName, (route) => false);
-          }
-
-          if (_formKey.currentState!.validate()) {
+          } else if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            if (args.edit) {
+            if (widget.args.product != null) {
               ProductModel product = ProductModel(
                 name: _product['name'],
                 description: _product['description'],
@@ -102,13 +101,14 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
                 price: double.parse(_product['price']),
                 imgUrl: '',
                 category: _product['category'],
-                rating: 0,
+                rating: const {"rate": 0, "count": 0},
                 productId: '',
               );
 
               BlocProvider.of<ProductBloc>(context)
                   .add(CreateProduct(product, image: _imageFile));
             }
+            BlocProvider.of<ProductBloc>(context).add(GetProducts());
             Navigator.of(context).pushNamedAndRemoveUntil(
                 HomeScreen.routeName, (route) => false);
           }
@@ -172,29 +172,26 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
                             vertical: 30,
                           ),
                           child: Center(
-                            child: widget.args.edit
-                                ? Image.network(widget.args.product!.imgUrl)
-                                : GestureDetector(
-                                    onTap: _selectImage,
-                                    child: _imageFile == null
-                                        ? Column(
-                                            children: [
-                                              const Icon(
-                                                Icons.image,
-                                                size: 35,
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              Text('Upload Image',
-                                                  style: textSmall),
-                                            ],
-                                          )
-                                        : Image.file(
-                                            _imageFile!,
-                                            height: 200,
-                                          ),
-                                  ),
+                            child: GestureDetector(
+                              onTap: _selectImage,
+                              child: _imageFile == null
+                                  ? Column(
+                                      children: [
+                                        const Icon(
+                                          Icons.image,
+                                          size: 35,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text('Upload Image', style: textSmall),
+                                      ],
+                                    )
+                                  : Image.file(
+                                      _imageFile!,
+                                      height: 200,
+                                    ),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -234,7 +231,7 @@ class _AddUpdateProductPageState extends State<AddUpdateProductPage> {
                               initialValue:
                                   widget.args.product?.description ?? '',
                               maxLines: 8,
-                              onChanged: (value) {
+                              onSaved: (value) {
                                 setState(() {
                                   _product['description'] = value;
                                 });

@@ -15,7 +15,7 @@ class Product extends Equatable {
   final double price;
   final String imgUrl;
   final String category;
-  final double rating;
+  final Map<String, double> rating;
 
   @override
   List<Object?> get props => [name, description, price, imgUrl, category];

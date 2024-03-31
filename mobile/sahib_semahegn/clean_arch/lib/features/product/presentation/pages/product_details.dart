@@ -32,7 +32,7 @@ class ProductDetail extends StatelessWidget {
                           product.imgUrl,
                           fit: BoxFit.fill,
                           errorBuilder: (context, error, stackTrace) =>
-                              Image.asset('images/placholder-image.jpg'),
+                              Image.asset('images/placeholder-image.jpg'),
                         ),
                       ),
                       Padding(
@@ -58,7 +58,7 @@ class ProductDetail extends StatelessWidget {
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                Text('(${product.rating.toString()})')
+                                Text("(${product.rating['rate'].toString()})")
                               ],
                             )
                           ],

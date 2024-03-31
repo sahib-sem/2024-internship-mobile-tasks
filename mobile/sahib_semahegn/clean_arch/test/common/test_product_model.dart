@@ -1,10 +1,7 @@
+import 'dart:convert';
+
 import 'package:clean_arch/features/product/data/models/product_model.dart';
 
-ProductModel testProductModel = const ProductModel(
-    rating: 0.0,
-    productId: '1',
-    name: 'test',
-    description: 'test description',
-    price: 0.0,
-    imgUrl: 'image.jpg',
-    category: 'category');
+import '../fixture/fixture.dart';
+
+ProductModel testProductModel = ProductModel.fromJson(jsonDecode(fixture('product.json')));

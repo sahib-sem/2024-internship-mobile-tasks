@@ -10,8 +10,6 @@ class ProductModel extends Product {
       required super.productId,
       required super.rating});
 
-  
-
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       productId: json['_id'],
@@ -20,7 +18,19 @@ class ProductModel extends Product {
       price: (json['price'] as num).toDouble(),
       imgUrl: json['image'],
       category: json['category'],
-      rating: json['rating']['rate'].toDouble(),
+      rating: convertRating(json['rating'] as Map<String, dynamic>),
+    );
+  }
+
+  Product toProduct() {
+    return Product(
+      name: name,
+      description: description,
+      price: price,
+      imgUrl: imgUrl,
+      category: category,
+      rating: rating,
+      productId: productId,
     );
   }
 
@@ -34,4 +44,17 @@ class ProductModel extends Product {
       'rating': rating,
     };
   }
+
+  
 }
+
+Map <String, double> convertRating(Map<String, dynamic> json) {
+    return {
+      "rate": (json['rate'] as int).toDouble(),
+      "count": (json['count'] as int).toDouble(),
+   };
+   }
+
+
+
+   
