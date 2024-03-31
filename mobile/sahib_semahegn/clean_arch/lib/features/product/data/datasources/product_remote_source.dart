@@ -25,12 +25,16 @@ class ProductRemoteSourceImpl implements ProductRemoteSource {
   final http.Client client;
 
   @override
-  Future<void> createProduct(ProductModel product, {File? image}) async {
+Future<void> createProduct(ProductModel product, {File? image}) async {
+  try {
     final request = http.MultipartRequest('POST', Uri.parse(baseUrl));
     request.headers['Content-Type'] = 'multipart/form-data';
 
-    // Add product data to request body
-    request.fields['data'] = jsonEncode(product.toJson());
+    request.fields['title'] = product.name;
+    request.fields['description'] = product.description;
+    request.fields['price'] = product.price.toString();
+    request.fields['category'] = product.category;
+    request.fields['rating'] = jsonEncode(product.rating);
 
     // Add image file to request if provided
     if (image != null) {
@@ -47,7 +51,10 @@ class ProductRemoteSourceImpl implements ProductRemoteSource {
 
     // Check response status code
     if (response.statusCode != 201) throw ServerException();
+  } catch (e) {
+    throw ServerException();
   }
+}
 
   @override
   Future<void> deleteProduct(String productId) async {
