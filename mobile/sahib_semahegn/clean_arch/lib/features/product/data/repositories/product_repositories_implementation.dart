@@ -123,5 +123,22 @@ class ProductRepositoryImpl implements ProductRepository {
       return Left(ServerFailure());
     }
   }
+  
+  @override
+  Future<Either<Failure, List<Product>>> filterProducts(String title) async {
+    
+    try {
+
+      if (await networkInfo.isConnected) {
+        final remoteProducts = await productRemoteSource.filterProducts(title);
+        return Right(remoteProducts);
+      } else {
+        return Left(NetworkFailure());
+      }
+      
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
 }

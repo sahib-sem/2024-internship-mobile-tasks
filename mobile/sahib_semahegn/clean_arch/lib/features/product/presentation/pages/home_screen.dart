@@ -1,5 +1,6 @@
 import 'package:clean_arch/features/product/domain/entities/product.dart';
 import 'package:clean_arch/features/product/presentation/bloc/product/blocs.dart';
+import 'package:clean_arch/features/product/presentation/bloc/product/product_events.dart';
 import 'package:clean_arch/features/product/presentation/pages/add_update_product.dart';
 import 'package:clean_arch/features/product/presentation/pages/product_route.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'pages.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/';
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final String today = DateFormat('MMMM d, y').format(DateTime.now());
 
   final List<Product> products = [];
+  RangeValues _priceRange = const RangeValues(20, 80);
+  Map<String, dynamic> filter = {};
+
+  void _applyFilter(filter, BuildContext context) {
+    context.read<ProductBloc>().add(FilterProductsByCategory(
+          category: filter['category'] ?? '',
+          minPrice: filter['min'] ?? 0,
+          maxPrice: filter['max'] ?? 100,
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +110,149 @@ class HomeScreen extends StatelessWidget {
                   'Available Products',
                   style: textLarge,
                 ),
+
+                // add search box and search button
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            context.read<ProductBloc>().add(GetProducts());
+                            return;
+                          } else {
+                            context
+                                .read<ProductBloc>()
+                                .add(FilterProducts(title: value));
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search product',
+                          suffixIcon: const Icon(Icons.arrow_forward_rounded),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 10,
+                    ),
+
+                    Expanded(
+                        child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFF3F51F3)),
+                      child: IconButton(
+                        iconSize: 25,
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                  builder: (context, StateSetter setState) {
+                                return Container(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      // text field for category
+                                      TextFormField(
+                                        onChanged: (value) {
+                                          setState(() {
+                                            filter['category'] = value;
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: 'Category',
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      ),
+                                      RangeSlider(
+                                        values: _priceRange,
+                                        min: 0,
+                                        max: 100,
+                                        divisions: 100,
+                                        labels: RangeLabels(
+                                            _priceRange.start
+                                                .round()
+                                                .toString(),
+                                            _priceRange.end.round().toString()),
+                                        onChanged: (RangeValues value) {
+                                          setState(() {
+                                            _priceRange = value;
+                                            filter['min'] = value.start;
+                                            filter['max'] = value.end;
+                                          });
+                                        },
+                                      ),
+                                      ElevatedButton(
+                                          style: ButtonStyle(
+                                            padding: MaterialStateProperty.all<
+                                                EdgeInsetsGeometry>(
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 40, vertical: 20),
+                                            ),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                        Color>(
+                                                    const Color(0xFF3F51F3)),
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            _applyFilter(filter, context);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            'APPLY',
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                );
+                              });
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.filter_list,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ))
+
+                    // search button
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                // select one for category and Text field for min and max values
+
                 BlocBuilder<ProductBloc, ProductState>(
                   builder: (context, state) {
                     if (state is ProductLoading) {

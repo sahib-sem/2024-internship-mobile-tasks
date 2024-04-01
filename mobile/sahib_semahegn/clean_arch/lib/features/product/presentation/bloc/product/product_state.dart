@@ -32,6 +32,15 @@ class AllProductLoaded extends ProductState {
   List<Object> get props => [products];
 }
 
+class AllProductsFirstLoad extends ProductState {
+  final List<Product> products;
+
+  const AllProductsFirstLoad(this.products);
+
+  @override
+  List<Object> get props => [products];
+}
+
 class ProductError extends ProductState {
   final String message;
 

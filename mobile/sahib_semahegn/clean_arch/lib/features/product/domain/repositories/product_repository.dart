@@ -11,4 +11,5 @@ abstract class ProductRepository {
   Future<Either<Failure, void>> createProdut(ProductModel product, {File? image});
   Future<Either<Failure, void>> updateProduct(ProductModel product);
   Future<Either<Failure, void>> deleteProduct(String productId);
+  Future<Either<Failure, List<Product>>> filterProducts(String title);
 }

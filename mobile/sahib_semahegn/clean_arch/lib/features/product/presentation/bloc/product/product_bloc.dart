@@ -1,6 +1,7 @@
 import 'package:clean_arch/core/usecases/usecase.dart';
 import 'package:clean_arch/features/product/domain/usecases/add_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/delete_product.dart';
+import 'package:clean_arch/features/product/domain/usecases/filter_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product_list.dart';
 import 'package:clean_arch/features/product/domain/usecases/update_product.dart';
@@ -17,6 +18,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ViewProductUsecase viewProductUsecase;
   final DeleteProductUsecase deleteProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
+  final FilterProductsUsecase filterProductsUsecase;
 
   ProductBloc({
     required this.createProductUsecase,
@@ -24,6 +26,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     required this.viewProductUsecase,
     required this.deleteProductUsecase,
     required this.updateProductUsecase,
+    required this.filterProductsUsecase,
   }) : super(ProductInitial()) {
     on<GetProducts>((event, emit) async {
       emit(ProductLoading());
@@ -91,6 +94,34 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       updatedProducts.fold(
         (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
         (products) => emit(AllProductLoaded(products)),
+      );
+    });
+
+    on<FilterProducts>((event, emit) async {
+      emit(ProductLoading());
+      final result =
+          await filterProductsUsecase(FilterProductsParams(title: event.title));
+      result.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) => emit(AllProductLoaded(products)),
+      );
+    });
+
+    on<FilterProductsByCategory>((event, emit) async {
+      emit(ProductLoading());
+      final result = await viewAllProductsUsecase(NoParams());
+
+      result.fold(
+        (failure) => emit(const ProductError(SERVER_FAILURE_MESSAGE)),
+        (products) {
+          final filteredProducts = products.where((product) {
+            return product.price >= event.minPrice &&
+                product.price <= event.maxPrice &&
+                product.category == event.category;
+          }).toList();
+
+          return emit(AllProductLoaded(filteredProducts));
+        },
       );
     });
   }

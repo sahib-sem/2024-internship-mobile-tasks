@@ -4,6 +4,7 @@ import 'package:clean_arch/core/usecases/usecase.dart';
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart';
 import 'package:clean_arch/features/product/domain/usecases/add_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/delete_product.dart';
+import 'package:clean_arch/features/product/domain/usecases/filter_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product_list.dart';
 import 'package:clean_arch/features/product/domain/usecases/update_product.dart';
@@ -17,11 +18,6 @@ import 'package:clean_arch/features/product/presentation/bloc/product/blocs.dart
 
 @GenerateMocks([
   ProductRepository,
-  CreateProductUsecase,
-  DeleteProductUsecase,
-  UpdateProductUsecase,
-  ViewAllProductsUsecase,
-  ViewProductUsecase,
 ])
 void main() {
   final createProductUsecase =
@@ -43,6 +39,10 @@ void main() {
     repository: MockProductRepository(),
   );
 
+  final filterProductsUsecase = FilterProductsUsecase(
+    repository: MockProductRepository(),
+  );
+
   final products = [testProductModel];
   group('getProducts', () {
     blocTest(
@@ -53,6 +53,7 @@ void main() {
         viewProductUsecase: viewProductUsecase,
         deleteProductUsecase: deleteProductUsecase,
         updateProductUsecase: updateProductUsecase,
+        filterProductsUsecase: filterProductsUsecase,
       ),
       act: (bloc) => bloc.add(GetProducts()),
       setUp: () {
@@ -73,6 +74,7 @@ void main() {
               viewProductUsecase: viewProductUsecase,
               deleteProductUsecase: deleteProductUsecase,
               updateProductUsecase: updateProductUsecase,
+              filterProductsUsecase: filterProductsUsecase,
             ),
         setUp: () {
           when(viewAllProductsUsecase(NoParams()))
@@ -94,6 +96,7 @@ void main() {
         viewProductUsecase: viewProductUsecase,
         deleteProductUsecase: deleteProductUsecase,
         updateProductUsecase: updateProductUsecase,
+        filterProductsUsecase: filterProductsUsecase,
       ),
       act: (bloc) => bloc.add(const GetProduct('1')),
       setUp: () {
@@ -114,6 +117,7 @@ void main() {
               viewProductUsecase: viewProductUsecase,
               deleteProductUsecase: deleteProductUsecase,
               updateProductUsecase: updateProductUsecase,
+              filterProductsUsecase: filterProductsUsecase,
             ),
         setUp: () {
           when(viewProductUsecase(GetProductParams(productId: '1')))
@@ -135,6 +139,7 @@ void main() {
         viewProductUsecase: viewProductUsecase,
         deleteProductUsecase: deleteProductUsecase,
         updateProductUsecase: updateProductUsecase,
+        filterProductsUsecase: filterProductsUsecase,
       ),
       act: (bloc) => bloc.add(CreateProduct(testProductModel)),
       setUp: () {
@@ -155,6 +160,7 @@ void main() {
               viewProductUsecase: viewProductUsecase,
               deleteProductUsecase: deleteProductUsecase,
               updateProductUsecase: updateProductUsecase,
+              filterProductsUsecase: filterProductsUsecase,
             ),
         setUp: () {
           when(createProductUsecase(AddProductParams(product: testProductModel)))
@@ -176,6 +182,7 @@ void main() {
         viewProductUsecase: viewProductUsecase,
         deleteProductUsecase: deleteProductUsecase,
         updateProductUsecase: updateProductUsecase,
+        filterProductsUsecase: filterProductsUsecase
       ),
       act: (bloc) => bloc.add(UpdateProduct(testProductModel)),
       setUp: () {
@@ -195,6 +202,7 @@ void main() {
               viewAllProductsUsecase: viewAllProductsUsecase,
               viewProductUsecase: viewProductUsecase,
               deleteProductUsecase: deleteProductUsecase,
+              filterProductsUsecase: filterProductsUsecase,
               updateProductUsecase: updateProductUsecase,
             ),
         setUp: () {
@@ -217,6 +225,7 @@ void main() {
         viewProductUsecase: viewProductUsecase,
         deleteProductUsecase: deleteProductUsecase,
         updateProductUsecase: updateProductUsecase,
+        filterProductsUsecase: filterProductsUsecase
       ),
       act: (bloc) => bloc.add(DeleteProduct('1')),
       setUp: () {
@@ -237,6 +246,7 @@ void main() {
               viewProductUsecase: viewProductUsecase,
               deleteProductUsecase: deleteProductUsecase,
               updateProductUsecase: updateProductUsecase,
+              filterProductsUsecase: filterProductsUsecase
             ),
         setUp: () {
           when(deleteProductUsecase(DeleteProductParams(productId: '1')))

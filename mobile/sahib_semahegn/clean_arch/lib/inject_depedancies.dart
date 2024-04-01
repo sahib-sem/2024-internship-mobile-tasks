@@ -7,6 +7,7 @@ import 'package:clean_arch/features/product/data/repositories/product_repositori
 import 'package:clean_arch/features/product/domain/repositories/product_repository.dart';
 import 'package:clean_arch/features/product/domain/usecases/add_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/delete_product.dart';
+import 'package:clean_arch/features/product/domain/usecases/filter_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product.dart';
 import 'package:clean_arch/features/product/domain/usecases/get_product_list.dart';
 import 'package:clean_arch/features/product/domain/usecases/update_product.dart';
@@ -29,6 +30,7 @@ Future<void> init() async {
         viewProductUsecase: sl(),
         deleteProductUsecase: sl(),
         updateProductUsecase: sl(),
+        filterProductsUsecase: sl(),
       ));
 
   // usecases
@@ -37,6 +39,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ViewProductUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteProductUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateProductUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FilterProductsUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl(

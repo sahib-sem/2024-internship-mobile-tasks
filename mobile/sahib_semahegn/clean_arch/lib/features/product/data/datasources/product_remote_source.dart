@@ -15,6 +15,8 @@ abstract class ProductRemoteSource {
   Future<void> updateProduct(ProductModel product);
 
   Future<void> deleteProduct(String productId);
+
+  Future<List<ProductModel>> filterProducts(String title);
 }
 
 class ProductRemoteSourceImpl implements ProductRemoteSource {
@@ -106,5 +108,26 @@ Future<void> createProduct(ProductModel product, {File? image}) async {
     );
 
     if (result.statusCode != 200) throw ServerException();
+  }
+  
+  @override
+  Future<List<ProductModel>> filterProducts(String title) async {
+    
+    // fetch products with title as a query parameter
+
+    final result = await client.get(
+      Uri.parse('$baseUrl?title=$title'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (result.statusCode == 200) {
+      final Map<String, dynamic> resultMap = jsonDecode(result.body);
+      final List<dynamic> products = resultMap['products'];
+
+      return products.map((e) => ProductModel.fromJson(e)).toList();
+    } else {
+      throw ServerException();
+    }
+
   }
 }
